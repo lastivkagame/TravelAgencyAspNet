@@ -1,0 +1,12 @@
+E:\Asp. Net Lessons\Coursework_Travel\versions\2\TravelAgency\TravelDAL\bin\Debug\TravelDAL.dll.config
+E:\Asp. Net Lessons\Coursework_Travel\versions\2\TravelAgency\TravelDAL\bin\Debug\TravelDAL.dll
+E:\Asp. Net Lessons\Coursework_Travel\versions\2\TravelAgency\TravelDAL\bin\Debug\TravelDAL.pdb
+E:\Asp. Net Lessons\Coursework_Travel\versions\2\TravelAgency\TravelDAL\bin\Debug\EntityFramework.dll
+E:\Asp. Net Lessons\Coursework_Travel\versions\2\TravelAgency\TravelDAL\bin\Debug\EntityFramework.SqlServer.dll
+E:\Asp. Net Lessons\Coursework_Travel\versions\2\TravelAgency\TravelDAL\bin\Debug\EntityFramework.xml
+E:\Asp. Net Lessons\Coursework_Travel\versions\2\TravelAgency\TravelDAL\bin\Debug\EntityFramework.SqlServer.xml
+E:\Asp. Net Lessons\Coursework_Travel\versions\2\TravelAgency\TravelDAL\obj\Debug\TravelDAL.csprojAssemblyReference.cache
+E:\Asp. Net Lessons\Coursework_Travel\versions\2\TravelAgency\TravelDAL\obj\Debug\TravelDAL.csproj.CoreCompileInputs.cache
+E:\Asp. Net Lessons\Coursework_Travel\versions\2\TravelAgency\TravelDAL\obj\Debug\TravelDAL.csproj.CopyComplete
+E:\Asp. Net Lessons\Coursework_Travel\versions\2\TravelAgency\TravelDAL\obj\Debug\TravelDAL.dll
+E:\Asp. Net Lessons\Coursework_Travel\versions\2\TravelAgency\TravelDAL\obj\Debug\TravelDAL.pdb

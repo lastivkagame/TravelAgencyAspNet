@@ -1,0 +1,473 @@
+﻿@*@{
+        ViewBag.Title = "ToursPage";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <h2>ToursPage</h2>*@
+
+
+
+@{
+    ViewBag.Title = "ToursPage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="dashboard-main-wrapper">
+    <div class="nav-left-sidebar sidebar-dark page-top">
+        <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 100%;">
+            <div class="menu-list" style="overflow: hidden; width: auto; height: 100%;">
+                <nav class="navbar navbar-expand-lg navbar-light">
+                    <a class="d-xl-none d-lg-none" href="#"><!--Dashboard--></a>
+                    <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse" id="navbarNav" style="">
+                        <ul class="navbar-nav flex-column">
+                            <li class="nav-divider">
+                                Menu
+                            </li>
+                            <li class="nav-item">
+                                <div id="custom-search" class="top-search-bar m-b-10">
+                                    <input class="form-control" id="inputsearch" type="text"
+                                           onkeydown="onSearch(event)"
+                                           placeholder="Search..">
+                                    <div class="btn btn-primary bg-warning m-l-10 m-r-0" onclick="onBtnSerch(event)">-></div>
+                                </div>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link active" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1" aria-controls="submenu-1"><i></i>Tools <span class="badge badge-success">6</span></a>
+                                <div id="submenu-1" class="collapse submenu" style="">
+                                    <ul class="nav flex-column">
+                                        @*<li class="nav-item">
+            <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1-2" aria-controls="submenu-1-2">E-Commerce</a>
+            <div id="submenu-1-2" class="collapse submenu" style="">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">E Commerce Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ecommerce-product.html">Product List</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ecommerce-product-single.html">Product Single</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ecommerce-product-checkout.html">Product Checkout</a>
+                    </li>
+                </ul>
+            </div>
+        </li>*@
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="~/">Main</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="~/Tour/Create">Create Tour Card</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="~/Tour/CreateLocation">Create Location</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="~/Tour/Create">Message</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="~/Tour/Create">Puchses States</a>
+                                        </li>
+                                        @*<li class="nav-item">
+            <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1-1" aria-controls="submenu-1-1">Infulencer</a>
+            <div id="submenu-1-1" class="collapse submenu" style="">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard-influencer.html">Influencer</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="influencer-finder.html">Influencer Finder</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="influencer-profile.html">Influencer Profile</a>
+                    </li>
+                </ul>
+            </div>
+        </li>*@
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-2" aria-controls="submenu-2"><i class="fa fa-fw fa-rocket"></i>Filters</a>
+                                <div id="submenu-2" class="collapse submenu" style="">
+                                    <ul class="nav flex-column">
+
+
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1-2" aria-controls="submenu-1-2">Locations</a>
+                                            <div id="submenu-1-2" class="collapse submenu" style="">
+                                                <ul class="nav flex-column">
+                                                    @*<li class="nav-item">
+                                                            <a class="nav-link" href="index.html"> Dashboard</a>
+                                                        </li>*@
+                                                    <ul class="nav flex-column">
+                                                        @foreach (var item in ViewBag.Locactions)
+                                                        {
+                                                            <li class="nav-item">
+                                                                <input data-type="location" type="checkbox" id="@item" onclick="setFilter(this)" value="@item" name="@item" />
+                                                                <label for="@item">@item</label>
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                </ul>
+                                            </div>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1-3" aria-controls="submenu-1-3">Flight Type</a>
+                                            <div id="submenu-1-3" class="collapse submenu" style="">
+                                                <ul class="nav flex-column">
+                                                    @*<li class="nav-item">
+                                                            <a class="nav-link" href="index.html"> Dashboard</a>
+                                                        </li>*@
+                                                    <ul class="nav flex-column">
+                                                        @foreach (var item in ViewBag.FlightType)
+                                                        {
+                                                            <li class="nav-item">
+                                                                <input data-type="flighttype" type="checkbox" id="@item" onclick="setFilter(this)" value="@item" name="@item" />
+                                                                <label for="@item">@item</label>
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                </ul>
+                                            </div>
+                                        </li>
+
+                                        @*<li class="nav-item">
+                                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1-2" aria-controls="submenu-1-2">Flights</a>
+                                                <div id="submenu-1-2" class="collapse submenu" style="">
+                                                    <ul class="nav flex-column">
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" href="index.html"> Dashboard</a>
+                                                        </li>
+                                                        <ul class="nav flex-column">
+                                                            @foreach (var item in ViewBag.Flights)
+                                                            {
+                                                                <li class="nav-item">
+                                                                    <input data-type="developer" type="checkbox" id="@item" onclick="setFilter(this)" value="@item" name="@item" />
+                                                                    <label for="@item">@item</label>
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    </ul>
+                                                </div>
+                                            </li>*@
+
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1-1" aria-controls="submenu-1-1">Flights: Start City</a>
+                                            <div id="submenu-1-1" class="collapse submenu" style="">
+                                                <ul class="nav flex-column">
+                                                    @*<li class="nav-item">
+                                                            <a class="nav-link" href="dashboard-influencer.html">Influencer</a>
+                                                        </li>*@
+                                                    <ul class="nav flex-column">
+                                                        @foreach (var item in ViewBag.Flights)
+                                                        {
+                                                            <li class="nav-item">
+                                                                <input data-type="flightcitystart" type="checkbox" id="@item" onclick="setFilter(this)" value="@item" name="@item" />
+                                                                <label for="@item">@item</label>
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                </ul>
+                                            </div>
+                                        </li>
+
+
+
+                                        @*<li class="nav-item">
+                                                <a class="nav-link" href="pages/cards.html">Cards <span class="badge badge-secondary">New</span></a>
+                                            </li>
+
+                                            </li>*@
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="pages/chart-c3.html">Basket</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="pages/chart-c3.html">Order History</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="pages/chart-c3.html"><i class="class=" fa fa-fw fa-user-circle"></i> Account</a>
+                            </li>
+                            @*<li class="nav-item">
+                                    <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-3" aria-controls="submenu-3"><i></i>Basket</a>
+                                    <div id="submenu-3" class="collapse submenu" style="">
+                                        <ul class="nav flex-column">
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="pages/chart-c3.html">C3 Charts</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="pages/chart-chartist.html">Chartist Charts</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="pages/chart-charts.html">Chart</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="pages/chart-morris.html">Morris</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="pages/chart-sparkline.html">Sparkline</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="pages/chart-gauge.html">Guage</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>*@
+                        </ul>
+                    </div>
+                </nav>
+            </div><div class="slimScrollBar" style="background: rgb(0, 0, 0); width: 7px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 848px;"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
+        </div>
+    </div>
+
+    <div class="dashboard-wrapper">
+        <div id="toursContainer" class="row container">
+            <section class="page-section bg-light" id="portfolio">
+                <div class="container">
+
+                   
+                        @if (ViewBag.SuccessTourCreated == "succes")
+                        {
+                            <p>Congratulations! Tour succcesfully created!</p>
+                            ViewBag.SuccessTourCreated = null;
+                        }
+                    
+
+                    <div class="row">
+                        @foreach (var item in ViewBag.Tours)
+                        {
+                            <div class="col-lg-4 col-sm-6 mb-4">
+                                <div class="portfolio-item">
+                                    <a class="portfolio-link" data-toggle="modal" href="#@item.FullIdentity">
+                                        <div class="portfolio-hover">
+                                            <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                        </div>
+                                        <img class="img-fluid img-fluid2" src="@item.Image" alt="" />
+                                    </a>
+                                    <div class="portfolio-caption">
+                                        <div class="portfolio-caption-heading">@item.Hotel</div>
+                                        <div class="portfolio-caption-subheading text-muted">Location: @item.LocationResortPlace</div>
+
+                                        <a class="portfolio-link" data-toggle="modal" href="#@item.FullIdentity">
+                                            <button class="btn btn-primary">
+                                                MORE
+                                            </button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>}
+
+                    </div>
+
+                </div>
+            </section>
+        </div>
+    </div>
+
+</div>
+
+<!-- Modal 1-->
+@foreach (var item in ViewBag.Tours)
+{
+    <div class="portfolio-modal modal fade" id="@item.FullIdentity" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="close-modal" data-dismiss="modal"><img src="~/AdditionalTemplateComponents/assets/img/close-icon.svg" alt="Close modal" /></div>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="modal-body">
+                                <!-- Project Details Go Here-->
+                                <h2 class="text-uppercase">@item.Hotel</h2>
+                                <p class="item-intro text-muted">ID: @item.Id</p>
+                                <img class="img-fluid d-block mx-auto" src="@item.Image" alt="" />
+                                <p class="standart-description">@item.Description</p>
+                                @*<ul class="list-inline">
+                                        <li><strong>Difficaltly:</strong> @item.Price</li>
+                                        <li><strong>EscapeRate:</strong> @item.Price</li>
+                                        <li><strong>Rating:</strong> @item.Price</li>
+                                        <li><strong>CompanyName:</strong> @item.Price</li>
+                                    </ul>*@
+                                <div class="card-body">
+                                    <div class="main">
+                                        <div class="right-col spec-block-style">
+                                            <p>
+                                                <h2 class="card-title m0 justify-content-center justify-content-center text-center gold-text"> - About Tour - </h2>
+                                            </p>
+                                            <table id="customers">
+                                                <tr>
+                                                    <th>Category</th>
+                                                    <th>Info</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>Telephone:</td>
+                                                    <td> @item.Telephone</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>ResortNights:</td>
+                                                    <td> @item.ResortNights</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Price:</td>
+                                                    <td>@item.Price @item.Valute</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>MaxAmountPeople:</td>
+                                                    <td> @item.MaxAmountPeople</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>MinAmountPeople:</td>
+                                                    <td> @item.MinAmountPeople</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Rating:</td>
+                                                    <td> @item.Rating / 10</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>MealType:</td>
+                                                    <td> @item.MealType </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>LocationFirstFlight:</td>
+                                                    <td> @item.LocationFirstFlight</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>LocationResortPlace:</td>
+                                                    <td> @item.LocationResortPlace</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Flight:</td>
+                                                    <td> @item.Flight</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>TypeRoom:</td>
+                                                    <td> @item.TypeRoom</td>
+                                                </tr>
+                                                @*<tr>
+                                                        <td>Address:</td>
+                                                        <td> @ViewBag.CurrentElement.Address</td>
+                                                    </tr>*@
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Slideshow container -->
+                                <div class="slideshow-container">
+                                    <p> <h2 class="card-title m0 justify-content-center justify-content-center text-center"> - Gallary - </h2></p>
+                                    <div class="count-of-images"></div>
+                                    @foreach (var item2 in @ViewBag.Gallaries)
+                                    {
+                                        if (@item.Id == @item2.TourId)
+                                        {@*<p>@item.Id - tour; @item2.TourId - gal</p>*@
+                                        <div class="mySlides fade">
+                                            <img class="image-from-gallary" alt="sorry, image not found" src="@item2.Image" style="width:100%">
+                                        </div>}
+
+                                }
+                                    @*<div class="mySlides fade">
+                                            <div class="numbertext">2 / 3</div>
+                                            <img src="~/AdditionalTemplateComponents/assets/img/logos/logo-room.png" style="width:100%">
+                                            <div class="text">Caption Two</div>
+                                        </div>
+
+                                        <div class="mySlides fade">
+                                            <div class="numbertext">3 / 3</div>
+                                            <img src="~/AdditionalTemplateComponents/assets/img/logos/logo-room.png" style="width:100%">
+                                            <div class="text">Caption Three</div>
+                                        </div>*@
+
+
+                                    <!-- Next and previous buttons -->
+                                    <a id="prevID" class="prev" style="text-align: left" onclick="plusSlides(-1)">&#10094;</a>
+                                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                                </div>
+                                <br>
+
+                                <!-- The dots/circles -->
+                                <div style="text-align:center;">
+                                    @foreach (var item2 in @ViewBag.Gallaries)
+                                    {
+                                        if (item.Id == item2.TourId)
+                                        {
+                                            <span class="dot" onclick="currentSlide(@item2.Id)"></span>}
+                                    }
+
+                                </div>
+                                <div class="m-t-30">
+                                    <button class="btn btn-primary" data-dismiss="modal" type="button">
+                                        <i class="fas fa-times mr-1"></i>
+                                        Close Project
+                                    </button>
+                                    <a href="/Home/ShowMoreQuestRoom/@item.Id">
+                                        <button class="btn btn-primary">
+                                            Order
+                                        </button>
+                                    </a>
+                                    <a href="/Tour/Edit/@item.Id">
+                                        <button class="btn btn-primary">
+                                            Order
+                                        </button>
+                                    </a>
+                                    @*<a class="nav-link" href="~/Tour/Edit">Message</a>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--<div class="portfolio-modal modal fade" id="@item.FullIdentity" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="close-modal" data-dismiss="modal"><img src="~/AdditionalTemplateComponents/assets/img/close-icon.svg" alt="Close modal" /></div>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="modal-body">-->
+    <!-- Project Details Go Here-->
+    <!--<h2 class="text-uppercase">@item.Hotel</h2>
+                                <p class="item-intro text-muted">@item.Price</p>
+                                <img class="img-fluid d-block mx-auto" src="@item.Image" alt="" />
+                                <p>@item.Description</p>
+                                <ul class="list-inline">
+                                    <li><strong>Difficaltly:</strong> @item.Price</li>
+                                    <li><strong>EscapeRate:</strong> @item.Price</li>
+                                    <li><strong>Rating:</strong> @item.Price</li>
+                                    <li><strong>CompanyName:</strong> @item.Price</li>
+                                </ul>
+                                <button class="btn btn-primary" data-dismiss="modal" type="button">
+                                    <i class="fas fa-times mr-1"></i>
+                                    Close Project
+                                </button>
+                                <a href="/Home/ShowMoreQuestRoom/@item.Id">
+                                    <button class="btn btn-primary">
+                                        Open Full Info (With Gallary)
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>-->}
+
+<!-- Bootstrap core JS-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Third party plugin JS-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+<!-- Contact form JS-->
+<script src="assets/mail/jqBootstrapValidation.js"></script>
+<script src="assets/mail/contact_me.js"></script>
+<!-- Core theme JS-->
+<script src="~/Content/template-script.js"></script>

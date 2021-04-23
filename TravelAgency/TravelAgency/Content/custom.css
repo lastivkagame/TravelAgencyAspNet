@@ -1,0 +1,33 @@
+﻿#MyCreateInput {
+    background-color: #242849;
+    color: white;
+    font-family: Cooper;
+    margin: 0 auto;
+    margin-top: 0px;
+    margin-top: 20px;
+    width: 100%;
+}
+
+select.form-control
+{
+    margin-top: 10px;
+}
+
+.my-image-chooser div input
+{
+    width:inherit;
+}
+
+/*input[type="radio"] {
+    box-sizing: border-box;
+    padding: 0;
+    display: inline;
+}*/
+
+#localImg, #urlimage {
+    display: none;
+}
+
+#radioUrlImg, #radioFileImg {
+    display: inline-block;
+}

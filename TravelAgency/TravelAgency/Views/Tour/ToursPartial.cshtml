@@ -1,0 +1,21 @@
+﻿
+@model  List<TravelAgency.Models.TourViewModel>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+<div class="col-12 col-sm-6 col-md-4 col-lg-3 travel-card">
+    <div class="card">
+        <img class="card-img-top img-fluid p-2" src="@item.Image" alt="Card image cap">
+        <div class="card-body">
+            <h3 class="card-title">@item.Hotel</h3>
+            <p class="card-text">@item.Description</p>
+            <p class="card-text">Location: <strong>@item.Flight</strong></p>
+            <p class="card-text">Flight from: <strong>@item.Flight</strong></p>
+            <p class="card-text">@item.Price</p>
+            @*<a href="/Tour/Edit" class="btn btn-primary">Edit</a>*@
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+        </div>
+    </div>
+</div>}
+</div>
