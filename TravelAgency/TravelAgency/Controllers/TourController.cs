@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -101,11 +102,48 @@ namespace TravelAgency.Controllers
                 return View();
             }
 
-            await _tourService.AddLocationAsync(_mapper.Map<Location>(model));
+            await _tourService.AddLocationAsync(new Location
+            {
+                City = model.City,
+                Country = model.Country
+            });
 
             ViewBag.SuccessLocationCreated = "succes";
+            SetViewBag();
 
-            return RedirectToAction("Index");
+            return RedirectToAction("ToursPage");
+        }
+
+        public ActionResult CreateFlight()
+        {
+            //ViewBag.Locactions = GetLocationsString(_tourService.GetAllLocation());
+            //ViewBag.Locactions = _tourService.GetAllLocation();
+            //ViewBag.Flights = _tourService.GetAllFlight();
+            SetViewBag();
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> CreateFlight(FlightViewModel model)
+        {
+            // 1) якщо картинка:
+            //    2) зберегти картинку на сервер
+            // 2.1) конвертувати картинку
+            //    3) записати шлях в модель
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            await _tourService.AddFlightAsync(new Flight
+            {
+                DateStart = model.DateStart,
+                Type = model.Type
+            });
+
+            SetViewBag();
+
+            return RedirectToAction("ToursPage");
         }
 
         public List<string> GetLocationsString(IEnumerable<Location> list)
@@ -148,28 +186,82 @@ namespace TravelAgency.Controllers
 
                 bitmap.Save(serverPath);
                 model.Image = $"/Images/{fileName}";
+                model.ImageForGallaries = new List<string>();
+                model.ImageForGallaries.Add($"/Images/{fileName}");
             }
 
             await _tourService.AddTourAsync(_mapper.Map<Tour>(model));
 
             ViewBag.SuccessTourCreated = "succes";
 
-            return RedirectToAction("Index");
+            return RedirectToAction("ToursPage");
         }
 
-        public ActionResult Edit(int id)
+        [HttpPost]
+        public async Task<ActionResult> Edit(int id)
         {
             var tour = _tourService.GetTour(id);
+
+            await _tourService.EditTourAsync(tour);
+
+            return View("ToursTage");
+        }
+
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            int key = (int)id;
+
+            var tour = _tourService.GetTour(key);
+            SetViewBag();
+            //return View();
             return View(_mapper.Map<TourViewModel>(tour));
         }
 
         [HttpPost]
-        public ActionResult Edit()
+        public async Task<ActionResult> Delete(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Tour tour = _tourService.GetAllTour(null).FirstOrDefault((x) => x.Id == id);
+            if (tour == null)
+            {
+                return HttpNotFound();
+            }
+
+            int key = (int)id;
+
+            await _tourService.DeleteTourAsync(key); 
+            //_tourService.DeleteTourAsync(key);
+
+            SetViewBag();
+
+            return View("ToursPage");
+        }
+
+        public ActionResult OrderTour(int? id)
+        {
+            SetViewBag();
             return View();
         }
 
-        public ActionResult Filter(string type, string value)
+
+        //[HttpPost]
+        //public async Task<ActionResult> OrderTour(int? id)
+        //{
+        //    SetViewBag();
+
+        //    return View("ToursPage");
+        //}
+
+
+            public ActionResult Filter(string type, string value)
         {
 
             var filter = new TourFilter()
@@ -185,11 +277,11 @@ namespace TravelAgency.Controllers
             {
                 filter.Predicate = (x => x.Hotel == value);
             }
-            else if (type == "flightcitystart")
+            else if (type == "flight_date")
             {
-                filter.Predicate = (x => x.Flight.FlightDateToBegan == value);
+                filter.Predicate = (x => x.Flight.DateStart == value);
             }
-            else if (type == "flighttype")
+            else if (type == "flight_type")
             {
                 filter.Predicate = (x => x.Flight.Type == value);
             }
@@ -217,10 +309,10 @@ namespace TravelAgency.Controllers
 
             Session["TourFilter"] = filters;
 
-            var games = _tourService.GetAllTour(filters);
+            var tours = _tourService.GetAllTour(filters);
             SetViewBag();
 
-            return PartialView("ToursPartial", _mapper.Map<List<TourViewModel>>(games));
+            return PartialView("ToursPartial", _mapper.Map<List<TourViewModel>>(tours));
         }
 
         private void SetViewBag()
@@ -252,8 +344,17 @@ namespace TravelAgency.Controllers
 
             List<string> temptry = new List<string>() { "h", "e", "l", "p" };
             ViewBag.Locactions = _tourService.GetAllLocation().Select(x => x.City + ", " + x.Country);
-            ViewBag.Flights = _tourService.GetAllFlight().Select(x => x.FlightDateToBegan);
+            ViewBag.Flights = _tourService.GetAllFlight().Select(x => x.DateStart);
             ViewBag.FlightType = _tourService.GetAllFlight().Select(x => x.Type);
+
+            //var distinctItems = _tourService.GetAllFlight().GroupBy(x => x.Type).Select(y => y.First());
+            //var query = _tourService.GetAllFlight().GroupBy(x => x.Type);
+
+            List<string> type_fligh = CreateListWithoutDublicate(_tourService.GetAllFlight().Select(x => x.Type));
+            List<string> fligh_date = CreateListWithoutDublicate(_tourService.GetAllFlight().Select(x => x.DateStart));
+
+            ViewBag.FlightTypeFilter = type_fligh;
+            ViewBag.FlightDateFilter = fligh_date;
 
             var gall = _tourService.GetImageForGallaries();//new List<ICollection<ImageForGallary>>();
 
@@ -265,6 +366,39 @@ namespace TravelAgency.Controllers
             ViewBag.Gallaries = gall;
 
             // ViewBag.FlightForChoose = _tourService.GetAllFlight().Select(x => x.Type + " (from " + x..City + ", " + x.LocationFirstFlight.City + " at " + x.LocationResortPlace.City + ", " + x.LocationResortPlace.City+ " )"); ;
+        }
+
+        private List<string> CreateListWithoutDublicate(IEnumerable<string> collection)
+        {
+            var type_fligh = new List<string>();
+            bool flag = true;
+
+            if (collection == null)
+            {
+                return type_fligh;
+            }
+
+            foreach (var item in collection)
+            {
+                if (item != null)
+                {
+                    for (int i = 0; i < type_fligh.Count(); i++)
+                    {
+                        if (item.ToString() == type_fligh[i])
+                        {
+                            flag = false;
+                        }
+                    }
+
+                    if (flag)
+                    {
+                        type_fligh.Add(item.ToString());
+                        flag = true;
+                    }
+                }
+            }
+
+            return type_fligh;
         }
     }
 }

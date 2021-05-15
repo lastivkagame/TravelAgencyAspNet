@@ -24,26 +24,39 @@ namespace TravelAgency.Utils
 
 
             CreateMap<Tour, TourViewModel>()
-                .ForMember(x => x.Flight, s => s.MapFrom(z => z.Flight.FlightDateToBegan))
+                .ForMember(x => x.Flight, s => s.MapFrom(z => z.Flight.DateStart))
                 .ForMember(x => x.LocationFirstFlight, s => s.MapFrom(z => z.LocationFirstFlight.City + ", " + z.LocationFirstFlight.Country))
                 .ForMember(x => x.LocationResortPlace, s => s.MapFrom(z => z.LocationResortPlace.City + ", " + z.LocationResortPlace.Country))
-                .ForMember(x => x.ImageForGallaries, s => s.MapFrom(z => z.Image));
+               .ForMember(x => x.ImageForGallaries, s => s.MapFrom(z => z.ImageForGallaries.Select(x=>x.Image)));
 
             CreateMap<TourViewModel, Tour>()
-                .ForMember(x => x.Flight, s => s.MapFrom(z => CreateFlightFromString(z.Flight)))
+                .ForMember(x => x.Flight, s => s.MapFrom(z => new Flight() { DateStart = z.Flight}))
                 .ForMember(x => x.LocationFirstFlight, s => s.MapFrom(z => CreateLocationFromString(z.LocationFirstFlight)))
                 .ForMember(x => x.LocationResortPlace, s => s.MapFrom(z => CreateLocationFromString(z.LocationResortPlace)))
-                .ForMember(x => x.ImageForGallaries, s => s.MapFrom(z => CreateGallaryFromString(z.Image)));
+                .ForMember(x => x.ImageForGallaries, s => s.MapFrom(z => CreateGallaryFromString(z.ImageForGallaries)));
+
+            CreateMap<Location, LocationViewModel>();
+            CreateMap<LocationViewModel, Location>();
+
+            CreateMap<Flight, FlightViewModel>();
+            CreateMap<FlightViewModel, Flight>();
         }
 
-        public ICollection<ImageForGallary> CreateGallaryFromString(string img)
+        public ICollection<ImageForGallary> CreateGallaryFromString(ICollection<string> list)
         {
-            var col = new List<ImageForGallary>()
-            {
-                new ImageForGallary(){Image = img}
-            };
+            var resalt = new List<ImageForGallary>();
 
-            return col;
+            if (list == null)
+            {
+                return resalt;
+            }
+
+            foreach (var item in list)
+            {
+                resalt.Add(new ImageForGallary() { Image = item });
+            }
+
+            return resalt;
         }
 
         public Location CreateLocationFromString(string data)
@@ -70,28 +83,29 @@ namespace TravelAgency.Utils
             return new Location() { City = city, Country = country };
         }
 
-        public Flight CreateFlightFromString(string data)
-        {
-            string date = "", time = "";
-            bool flag = true;
-            foreach (var item in data)
-            {
-                if (item == ' ' || item == 'a' || item == 't')
-                {
-                    flag = false;
-                }
-                else if (flag)
-                {
-                    date += item;
-                }
-                else
-                {
-                    time += item;
-                }
+        //public Flight CreateFlightFromString(string data)
+        //{
+        //    //string date = "", time = "";
+        //    //bool flag = true;
+        //    //foreach (var item in data)
+        //    //{
+        //    //    if (item == ' ' || item == 'a' || item == 't')
+        //    //    {
+        //    //        flag = false;
+        //    //    }
+        //    //    else if (flag)
+        //    //    {
+        //    //        date += item;
+        //    //    }
+        //    //    else
+        //    //    {
+        //    //        time += item;
+        //    //    }
 
-            }
+        //    //}
 
-            return new Flight() { FlightDateToBegan = time, StartTimeHours = date };
-        }
+        //    //return new Flight() { DateStart =  };
+        //    return 
+        //}
     }
 }

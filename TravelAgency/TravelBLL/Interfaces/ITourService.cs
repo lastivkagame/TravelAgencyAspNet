@@ -15,7 +15,10 @@ namespace TravelBLL.Interfaces
         IEnumerable<Location> GetAllLocation();
         IEnumerable<ImageForGallary> GetImageForGallaries();
         Task AddTourAsync(Tour tour);
+        Task DeleteTourAsync(int tour);
+        Task EditTourAsync(Tour tour);
         Task AddLocationAsync(Location location);
+        Task AddFlightAsync(Flight flight);
         IEnumerable<string> GetFlight();
         IEnumerable<string> GetLocation();
         IEnumerable<string> GetGallaries();

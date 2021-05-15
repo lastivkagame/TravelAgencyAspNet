@@ -47,11 +47,12 @@ namespace TravelAgency.Models
 
         public string FullIdentity => "Element" + this.Id;
 
-         public ICollection<string> ImageForGallaries { get; set; }
+        public int CountImage => ImageForGallaries != null ? ImageForGallaries.Count() : 0;
 
+         public ICollection<string> ImageForGallaries { get; set; }
         public TourViewModel()
         {
-            ImageForGallaries = new List<string>();
+            //ImageForGallaries = new List<string>();
         }
 
         //public int Id { get; set; }

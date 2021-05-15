@@ -15,7 +15,7 @@ namespace TravelBLL.Implementation
     public class TourService : ITourService
     {
         private readonly IGenericRepository<Tour> _tourRepository;
-        private readonly IGenericRepository<Flight> _frightRepository;
+        private readonly IGenericRepository<Flight> _flightRepository;
         private readonly IGenericRepository<Location> _locationRepository;
         private readonly IGenericRepository<ImageForGallary> _gallaryRepository;
 
@@ -24,9 +24,14 @@ namespace TravelBLL.Implementation
             IGenericRepository<Location> locationRepository, IGenericRepository<ImageForGallary> gallaryRepository)
         {
             _tourRepository = tourRepository;
-            _frightRepository = frightRepository;
+            _flightRepository = frightRepository;
             _locationRepository = locationRepository;
             _gallaryRepository = gallaryRepository;
+        }
+
+        public async Task AddFlightAsync(Flight flight)
+        {
+            await _flightRepository.CreateAsync(flight);
         }
 
         public async Task AddLocationAsync(Location location)
@@ -39,9 +44,19 @@ namespace TravelBLL.Implementation
             await _tourRepository.CreateAsync(tour);
         }
 
+        public async Task DeleteTourAsync(int tour)
+        {
+            await _tourRepository.DeleteAsync(tour);
+        }
+
+        public async Task EditTourAsync(Tour tour)
+        {
+            await _tourRepository.UpdateAsync(tour);
+        }
+
         public IEnumerable<Flight> GetAllFlight()
         {
-            return _frightRepository.GetAll();
+            return _flightRepository.GetAll();
         }
 
         public IEnumerable<Location> GetAllLocation()
@@ -91,7 +106,7 @@ namespace TravelBLL.Implementation
 
         public IEnumerable<string> GetFlight()
         {
-            return _frightRepository.GetAll().Select(x => x.FlightDateToBegan.ToString());
+            return _flightRepository.GetAll().Select(x => x.DateStart.ToString());
         }
 
         public IEnumerable<string> GetGallaries()

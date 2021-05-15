@@ -342,54 +342,74 @@
                                 </div>
                             </div>
                             <!-- Slideshow container -->
-                            <div class="slideshow-container">
+                            @* <div class="slideshow-container">
                                 <p> <h2 class="card-title m0 justify-content-center justify-content-center text-center"> - Gallary - </h2></p>
                                 <div class="count-of-images"></div>
                                 @foreach (var item2 in @item.ImageForGallaries)
-                                {@* if (@item.Id == @item2.TourId) { <p>@item.Id - tour; @item2.TourId - gal</p>*@
-                                                    <div class="mySlides fade">
-                                                        <img class="image-from-gallary" alt="sorry, image not found" src="@item2" style="width:100%">
-                                                    </div>
-                                                    }
-                                @*<div class="mySlides fade">
-                                        <div class="numbertext">2 / 3</div>
-                                        <img src="~/AdditionalTemplateComponents/assets/img/logos/logo-room.png" style="width:100%">
-                                        <div class="text">Caption Two</div>
-                                    </div>
+                                {@* if (@item.Id == @item2.TourId) { <p>@item.Id - tour; @item2.TourId - gal</p>
+                                                <div class="mySlides fade">
+                                                    <img class="image-from-gallary" alt="sorry, image not found" src="@item2" style="width:100%">
+                                                </div>
+                                                }
+                                                @*<div class="mySlides fade">
+                                    <div class="numbertext">2 / 3</div>
+                                    <img src="~/AdditionalTemplateComponents/assets/img/logos/logo-room.png" style="width:100%">
+                                    <div class="text">Caption Two</div>
+                                </div>
 
-                                    <div class="mySlides fade">
-                                        <div class="numbertext">3 / 3</div>
-                                        <img src="~/AdditionalTemplateComponents/assets/img/logos/logo-room.png" style="width:100%">
-                                        <div class="text">Caption Three</div>
-                                    </div>*@
+                                <div class="mySlides fade">
+                                    <div class="numbertext">3 / 3</div>
+                                    <img src="~/AdditionalTemplateComponents/assets/img/logos/logo-room.png" style="width:100%">
+                                    <div class="text">Caption Three</div>
+                                </div>
 
 
-                                <!-- Next and previous buttons -->
-                                <a id="prevID" class="prev" style="text-align: left" onclick="plusSlides(-1)">&#10094;</a>
-                                <a class="next" onclick="plusSlides(1)">&#10095;</a>
-                            </div>
-                            <br>
+                                                <!-- Next and previous buttons -->
+                                                <a id="prevID" class="prev" style="text-align: left" onclick="plusSlides(-1)">&#10094;</a>
+                                                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                                            </div>
+                                            <br>*@
 
                             <!-- The dots/circles -->
-                            <div style="text-align:center;">
-                                @foreach (var item2 in @item.ImageForGallaries)
-                                {
-                                    //if (item.Id == item2.TourId)
+                            @*<div style="text-align:center;">
+                                                        @foreach (var item2 in @item.ImageForGallaries)
+                                                        {
+                                                            //if (item.Id == item2.TourId)
 
-                <span class="dot" onclick="currentSlide(@item2)"></span>
-        }
+                                        <span class="dot" onclick="currentSlide(@item2)"></span>
+                                }
 
-                            </div>
+                                                    </div>*@
+
+
+
                             <div class="m-t-30">
                                 <button class="btn btn-primary" data-dismiss="modal" type="button">
                                     <i class="fas fa-times mr-1"></i>
                                     Close Project
                                 </button>
-                                <a href="/Home/ShowMoreQuestRoom/@item.Id">
+                                @if (User.Identity.IsAuthenticated)
+                                    {
+                                        if (User.IsInRole("Admin"))
+                                        {
+                                <a href="/Tour/Edit/@item.Id">
+                                    <button class="btn btn-primary">
+                                        Edit
+                                    </button>
+                                </a>
+                                <a href="/Tour/Delete/@item.Id">
+                                    <button class="btn btn-primary">
+                                        Delete
+                                    </button>
+                                </a>
+                                }
+                                    }
+                                <a href="/Tour/Order/@item.Id">
                                     <button class="btn btn-primary">
                                         Order
                                     </button>
                                 </a>
+                                @*<a class="nav-link" href="~/Tour/Edit">Message</a>*@
                             </div>
                         </div>
                     </div>
@@ -403,37 +423,37 @@
 
 
 @*Script for Image Gallary*@
-<script>
-    var slideIndex = 1;
+@*<script>
+        var slideIndex = 1;
 
-    showSlides(slideIndex);
+        showSlides(slideIndex);
 
-    function plusSlides(n) {
-        showSlides(slideIndex += n);
-    }
-
-    function currentSlide(n) {
-        showSlides(slideIndex = n);
-    }
-
-    function showSlides(n) {
-        var i;
-        var slides = document.getElementsByClassName("mySlides");
-        //alert(slides.length);
-        var dots = document.getElementsByClassName("dot");
-        if (n > slides.length) { slideIndex = 1 }
-        if (n < 1) { slideIndex = slides.length }
-        for (i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
         }
-        for (i = 0; i < dots.length; i++) {
-            dots[i].className = dots[i].className.replace(" active", "");
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
         }
-        slides[slideIndex - 1].style.display = "block";
-        slides[slideIndex - 1].style.opacity = 1;
-        dots[slideIndex - 1].className += " active";
-    }
-</script>
+
+        function showSlides(n) {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            //alert(slides.length);
+            var dots = document.getElementsByClassName("dot");
+            if (n > slides.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = slides.length }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex - 1].style.display = "block";
+            slides[slideIndex - 1].style.opacity = 1;
+            dots[slideIndex - 1].className += " active";
+        }
+    </script>*@
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

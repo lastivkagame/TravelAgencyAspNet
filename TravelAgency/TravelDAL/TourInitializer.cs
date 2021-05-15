@@ -35,16 +35,27 @@ namespace TravelDAL
 
             var flights = new List<Flight>()
             {
-                new Flight(){ FlightDateToBegan = Convert.ToDateTime("05/01/2021").ToString(), FlightDateBackBegan = Convert.ToDateTime("05/10/2021").ToString(), StartTimeHours = "7:30 AM", Type = "Bussnes Class"  },
-                new Flight(){ FlightDateToBegan = new DateTime(2021, 06, 02).ToString(), FlightDateBackBegan = new DateTime(2021,06,09).ToString(), StartTimeHours = "10:30 PM", Type = "Standart"  },
-                new Flight(){ FlightDateToBegan = new DateTime(2021,06,20).ToString(), FlightDateBackBegan = new DateTime(2021,06,25).ToString(), StartTimeHours = "5:25 PM", Type = "Bussnes Class"  },
-                new Flight(){ FlightDateToBegan = new DateTime(2021/07/01).ToString(), FlightDateBackBegan = new DateTime(2021/07/10).ToString(), StartTimeHours = "1:20 AM", Type = "Standart"  },
-                new Flight(){ FlightDateToBegan = new DateTime(2021/07/15).ToString(), FlightDateBackBegan = new DateTime(2021/07/21).ToString(), StartTimeHours = "12:40 AM", Type = "Bussnes Class"  },
-                new Flight(){ FlightDateToBegan = new DateTime(2021/07/23).ToString(), FlightDateBackBegan = new DateTime(2021/07/27).ToString(), StartTimeHours = "4:10 PM", Type = "Bussnes Class"  },
-                new Flight(){ FlightDateToBegan = new DateTime(2021/07/01).ToString(), FlightDateBackBegan = new DateTime(2021/07/10).ToString(), StartTimeHours = "8:15 PM", Type = "Standart"  },
-                new Flight(){ FlightDateToBegan = new DateTime(2021/07/15).ToString(), FlightDateBackBegan = new DateTime(2021/07/21).ToString(), StartTimeHours = "2:40 AM", Type = "Standart"  },
-                new Flight(){ FlightDateToBegan =  new DateTime(2021/08/30).ToString(), FlightDateBackBegan = new DateTime(2021/08/07).ToString(), StartTimeHours = "4:05 AM", Type = "Standart"  },
-                new Flight(){ FlightDateToBegan =  new DateTime(2021/06/02).ToString(), FlightDateBackBegan = new DateTime(2021/06/09).ToString(), StartTimeHours = "10:30 PM", Type = "Bussnes Class"  },
+                new Flight(){ DateStart = "02.07.2021", Type = "Bussnes Class"},
+                new Flight(){ DateStart = "14.07.2021", Type = "Standart"},
+                new Flight(){ DateStart = "25.07.2021", Type = "Bussnes Class"},
+                new Flight(){ DateStart = "03.06.2021", Type = "Bussnes Class"},
+                new Flight(){ DateStart = "20.06.2021", Type = "Bussnes Class"},
+                new Flight(){ DateStart = "10.06.2021", Type = "Standart"},
+                new Flight(){ DateStart = "05.08.2021", Type = "Bussnes Class"},
+                new Flight(){ DateStart = "09.08.2021", Type = "Standart"},
+                new Flight(){ DateStart = "21.08.2021", Type = "Standart"},
+                new Flight(){ DateStart = "29.07.2021", Type = "Standart"}
+
+                //new Flight(){ FlightDateToBegan = Convert.ToDateTime("05/01/2021").ToString(), FlightDateBackBegan = Convert.ToDateTime("05/10/2021").ToString(), StartTimeHours = "7:30 AM", Type = "Bussnes Class"  },
+                //new Flight(){ FlightDateToBegan = new DateTime(2021, 06, 02).ToString(), FlightDateBackBegan = new DateTime(2021,06,09).ToString(), StartTimeHours = "10:30 PM", Type = "Standart"  },
+                //new Flight(){ FlightDateToBegan = new DateTime(2021,06,20).ToString(), FlightDateBackBegan = new DateTime(2021,06,25).ToString(), StartTimeHours = "5:25 PM", Type = "Bussnes Class"  },
+                //new Flight(){ FlightDateToBegan = new DateTime(2021/07/01).ToString(), FlightDateBackBegan = new DateTime(2021/07/10).ToString(), StartTimeHours = "1:20 AM", Type = "Standart"  },
+                //new Flight(){ FlightDateToBegan = new DateTime(2021/07/15).ToString(), FlightDateBackBegan = new DateTime(2021/07/21).ToString(), StartTimeHours = "12:40 AM", Type = "Bussnes Class"  },
+                //new Flight(){ FlightDateToBegan = new DateTime(2021/07/23).ToString(), FlightDateBackBegan = new DateTime(2021/07/27).ToString(), StartTimeHours = "4:10 PM", Type = "Bussnes Class"  },
+                //new Flight(){ FlightDateToBegan = new DateTime(2021/07/01).ToString(), FlightDateBackBegan = new DateTime(2021/07/10).ToString(), StartTimeHours = "8:15 PM", Type = "Standart"  },
+                //new Flight(){ FlightDateToBegan = new DateTime(2021/07/15).ToString(), FlightDateBackBegan = new DateTime(2021/07/21).ToString(), StartTimeHours = "2:40 AM", Type = "Standart"  },
+                //new Flight(){ FlightDateToBegan =  new DateTime(2021/08/30).ToString(), FlightDateBackBegan = new DateTime(2021/08/07).ToString(), StartTimeHours = "4:05 AM", Type = "Standart"  },
+                //new Flight(){ FlightDateToBegan =  new DateTime(2021/06/02).ToString(), FlightDateBackBegan = new DateTime(2021/06/09).ToString(), StartTimeHours = "10:30 PM", Type = "Bussnes Class"  },
             };
 
             var tours = new List<Tour>()
@@ -68,7 +79,7 @@ namespace TravelDAL
 
                  new Tour(){ Hotel = "Pharaoh Azur Resort",
                     Description = "The hotel opened its doors in 1997 and was remodeled in 2019. It consists of a main 3-storey building, 50 one-storey bungalows and 3-storey detached 2 buildings (2 elevators in the main building and 2 elevators in detached buildings). Located in the southern part of Hurghada, a 20-minute drive from the airport. The hotel has a large, green area with an artificial lake and a beautiful beach. Suitable for a quiet family vacation",
-                    Flight = flights[8],
+                    Flight = flights[1],
                     Valute = "USD",
                     Price = 655,
                     ResortNights = 5,
